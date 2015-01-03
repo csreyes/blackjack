@@ -1,5 +1,9 @@
 body {
-  background-color: 006600;
+  background-image: url('https://betclick.hs.llnwd.net/e1/pict/Casino/06_Backgrounds/lucky_8_line.jpg');
+}
+
+h1 {
+  text-align: center;
 }
 
 .card {
@@ -24,13 +28,23 @@ body {
 }
 
 .gameContainer {
-  margin: 0 auto;
+  margin: 0 520;
   width: 50%;
 }
 
-.playerChips {
+.button-container {
+  position: absolute;
+  bottom: 375px;
+}
+
+button {
+  margin-left: 10px;
 }
 
 .play-button {
-  margin: 20 260;
+  margin: 20 275;
+}
+
+h2, h1 {
+  color: white;
 }

@@ -65,6 +65,7 @@ class window.App extends Backbone.Model
       alert('Player Wins!')
     else if playerScore == dealerScore
       alert('Push!')
+      @set 'currentBet', 10
     else
       @payOut(false)
       alert('Dealer Wins!')
@@ -86,4 +87,8 @@ class window.App extends Backbone.Model
       @set 'playerChips', @get('playerChips') + @get('currentBet')
     else
       @set 'playerChips', @get('playerChips') - @get('currentBet')
+      if @get('playerChips') <= 0
+        alert('You Lose!')
+        location.reload()
+    @set 'currentBet', 10
 

@@ -2,13 +2,15 @@ class window.AppView extends Backbone.View
   template: _.template '
     <div class="dealer-hand-container"></div>
     <div class="player-hand-container"></div>
-    <button class="hit-button btn btn-default btn-lg">Hit</button> <button class="stand-button btn btn-default btn-lg">Stand</button>
-    <button class="addBet-button btn btn-default btn-lg">Increase Bet</button>
-    <button class="removeBet-button btn btn-default btn-lg">Decrease Bet</button>
-    <button class="playerChips btn btn-default btn-lg" disabled="disabled">Current Bet: <%= currentBet %></button>
-    <button class="playerChips btn btn-default btn-lg" disabled="disabled">Total Chips: <%= playerChips %></button>
-    <br>
-    <button class="play-button btn btn-primary btn-lg">Play</button>
+    <div class="button-container">
+      <button class="play-button btn btn-primary btn-lg">Play</button>
+        <br>
+      <button class="hit-button btn btn-default btn-lg">Hit</button> <button class="stand-button btn btn-default btn-lg">Stand</button>
+      <button class="addBet-button btn btn-default btn-lg">Increase Bet</button>
+      <button class="removeBet-button btn btn-default btn-lg">Decrease Bet</button>
+      <button class="playerChips btn btn-default btn-lg" disabled="disabled">Current Bet: <%= currentBet %></button>
+      <button class="playerChips btn btn-default btn-lg" disabled="disabled">Total Chips: <%= playerChips %></button>
+    </div>
   '
 
   events:
