@@ -3,13 +3,17 @@
 class window.App extends Backbone.Model
   initialize: ->
     @set 'deck', new Deck()
+    @set 'playerChips', 500
+    @set 'currentBet', 10
+    @set 'playStateOn', false
     @newHand()
 
   playerBust: ->
     callback = =>
       alert('Player Busted !')
-      @newHand()
-    setTimeout callback, 10
+      @payOut(false)
+      @set 'playStateOn', false
+    setTimeout callback, 100
 
   playerStand: ->
     @get('dealerHand').at(0).flip()
@@ -18,14 +22,15 @@ class window.App extends Backbone.Model
   dealerBust: ->
     callback = =>
       alert('Dealer Busted!')
-      @newHand()
-    setTimeout callback, 10
+      @payOut(true)
+      @set 'playStateOn', false
+    setTimeout callback, 100
 
   dealerStand: ->
     callback = =>
       @compareHands()
-      @newHand()
-    setTimeout callback, 10
+      @set 'playStateOn', false
+    setTimeout callback, 100
 
   newHand: ->
     if @get('deck').length <= 10
@@ -40,8 +45,9 @@ class window.App extends Backbone.Model
     if @get('playerHand').scores()[1] == 21
       callback = =>
         alert('BlackJack!')
-        @newHand()
-      setTimeout callback, 10
+        @payOut(true)
+        @set 'playStateOn', false
+      setTimeout callback, 100
 
   compareHands: ->
     playerHand = @get('playerHand')
@@ -53,12 +59,31 @@ class window.App extends Backbone.Model
     else
       playerScore = @get('playerHand').scores()[0]
 
-
-
     dealerScore = @get('dealerHand').scores()[0]
     if playerScore > dealerScore
+      @payOut(true)
       alert('Player Wins!')
     else if playerScore == dealerScore
       alert('Push!')
     else
+      @payOut(false)
       alert('Dealer Wins!')
+
+  play: ->
+    @newHand()
+    @set 'playStateOn', true
+
+  addBet: ->
+    if @get('currentBet') < @get('playerChips') && !@get('playState')
+      @set 'currentBet', @get('currentBet')+10
+
+  removeBet: ->
+    if @get('currentBet') > 10 && !@get('playState')
+      @set 'currentBet', @get('currentBet')-10
+
+  payOut: (win)->
+    if win
+      @set 'playerChips', @get('playerChips') + @get('currentBet')
+    else
+      @set 'playerChips', @get('playerChips') - @get('currentBet')
+
