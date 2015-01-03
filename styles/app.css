@@ -14,3 +14,19 @@
 .hand {
   overflow: auto;
 }
+
+body {
+  background-color: #006600;
+}
+
+.player-hand-container {
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dealer-hand-container {
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}

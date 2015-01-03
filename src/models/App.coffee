@@ -6,20 +6,26 @@ class window.App extends Backbone.Model
     @newHand()
 
   playerBust: ->
-    alert('Player Busted !')
-    @newHand()
+    callback = =>
+      alert('Player Busted !')
+      @newHand()
+    setTimeout callback, 10
 
   playerStand: ->
     @get('dealerHand').at(0).flip()
     @get('dealerHand').hit()
 
   dealerBust: ->
-    alert('dealerbusted')
-    @newHand()
+    callback = =>
+      alert('Dealer Busted!')
+      @newHand()
+    setTimeout callback, 10
 
   dealerStand: ->
-    @compareHands()
-    @newHand()
+    callback = =>
+      @compareHands()
+      @newHand()
+    setTimeout callback, 10
 
   newHand: ->
     if @get('deck').length <= 10
@@ -32,8 +38,10 @@ class window.App extends Backbone.Model
     @get('dealerHand').on('dealerStand', @dealerStand, this)
     @trigger('newHand')
     if @get('playerHand').scores()[1] == 21
-      alert('BlackJack!')
-      @newHand()
+      callback = =>
+        alert('BlackJack!')
+        @newHand()
+      setTimeout callback, 50
 
   compareHands: ->
     playerHand = @get('playerHand')
