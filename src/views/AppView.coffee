@@ -11,6 +11,7 @@ class window.AppView extends Backbone.View
 
   initialize: ->
     @render()
+    @model.on('newHand', @render, this)
 
   render: ->
     @$el.children().detach()
