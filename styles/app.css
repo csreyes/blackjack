@@ -32,6 +32,9 @@ h1 {
   width: 50%;
 }
 
+.player-hand-container, .dealer-hand-container {
+}
+
 .button-container {
   position: absolute;
   bottom: 375px;

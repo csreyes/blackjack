@@ -6,6 +6,7 @@ class window.AppView extends Backbone.View
       <button class="play-button btn btn-primary btn-lg">Play</button>
         <br>
       <button class="hit-button btn btn-default btn-lg">Hit</button> <button class="stand-button btn btn-default btn-lg">Stand</button>
+      <button class="double-button btn btn-default btn-lg">DoubleDown</button>
       <button class="addBet-button btn btn-default btn-lg">Increase Bet</button>
       <button class="removeBet-button btn btn-default btn-lg">Decrease Bet</button>
       <button class="playerChips btn btn-default btn-lg" disabled="disabled">Current Bet: <%= currentBet %></button>
@@ -27,6 +28,8 @@ class window.AppView extends Backbone.View
     @$el.addClass('gameContainer')
     @model.on('change:currentBet', @render, this)
     @model.on('change:playStateOn', @render, this)
+    @model.on('change', @render, this)
+    # @model.on('add', -> alert ('called'), this)
 
   render: ->
     @$el.children().detach()
@@ -36,12 +39,16 @@ class window.AppView extends Backbone.View
       @$('.stand-button').hide()
       @$('.player-hand-container').hide()
       @$('.dealer-hand-container').hide()
+      @$('.double-button').hide()
     else
       @$('.addBet-button').hide()
       @$('.removeBet-button').hide()
       @$('.play-button').hide()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
+    if @model.get('playerHand').length > 2
+      console.log('hideme')
+      @$('.double-button').hide()
 
   # addChips: ->
   #   chips = @model.get('playerChips')

@@ -42,17 +42,11 @@ class window.App extends Backbone.Model
     @get('dealerHand').on('dealerBust', @dealerBust, this )
     @get('dealerHand').on('dealerStand', @dealerStand, this)
     @trigger('newHand')
-    if @get('playerHand').scores()[1] == 21
-      callback = =>
-        alert('BlackJack!')
-        @payOut(true)
-        @set 'playStateOn', false
-      setTimeout callback, 100
 
   compareHands: ->
     playerHand = @get('playerHand')
     if @get('playerHand').hasAce()
-      if playerHand.scores()[1] < 21
+      if playerHand.scores()[1] <= 21
         playerScore = @get('playerHand').scores()[1]
       else
         playerScore = @get('playerHand').scores()[0]
@@ -61,18 +55,23 @@ class window.App extends Backbone.Model
 
     dealerScore = @get('dealerHand').scores()[0]
     if playerScore > dealerScore
-      @payOut(true)
       alert('Player Wins!')
+      @payOut(true)
     else if playerScore == dealerScore
       alert('Push!')
       @set 'currentBet', 10
     else
-      @payOut(false)
       alert('Dealer Wins!')
+      @payOut(false)
 
   play: ->
-    @newHand()
     @set 'playStateOn', true
+    if @get('playerHand').scores()[1] == 21
+      callback = ->
+        alert('blackjack')
+        @payOut(true)
+        @set 'playStateOn', false
+      setTimeout(callback.bind(@), 100)
 
   addBet: ->
     if @get('currentBet') < @get('playerChips') && !@get('playState')
@@ -91,4 +90,5 @@ class window.App extends Backbone.Model
         alert('You Lose!')
         location.reload()
     @set 'currentBet', 10
+    @newHand()
 
