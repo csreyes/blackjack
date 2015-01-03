@@ -41,7 +41,7 @@ class window.App extends Backbone.Model
       callback = =>
         alert('BlackJack!')
         @newHand()
-      setTimeout callback, 50
+      setTimeout callback, 10
 
   compareHands: ->
     playerHand = @get('playerHand')

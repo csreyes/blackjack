@@ -1,3 +1,7 @@
+body {
+  background-color: 006600;
+}
+
 .card {
   float: left;
   border: solid 1px black;
@@ -15,18 +19,11 @@
   overflow: auto;
 }
 
-body {
-  background-color: #006600;
+.hit-button, .stand-button {
+  background-color: #A4D8A5;
 }
 
-.player-hand-container {
-  width: 20%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.dealer-hand-container {
-  width: 20%;
-  margin-left: auto;
-  margin-right: auto;
+.gameContainer {
+  margin: 0 auto;
+  width: 50%;
 }
