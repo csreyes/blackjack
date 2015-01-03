@@ -13,7 +13,7 @@ class window.Hand extends Backbone.Collection
     else
       if !@dealerCheck()
         newCard = @deck.pop()
-        @add(@deck.pop())
+        @add(newCard)
         if @isBust()
           @trigger('dealerBust')
         else
