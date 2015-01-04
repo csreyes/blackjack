@@ -20,6 +20,7 @@ class window.AppView extends Backbone.View
     'click .addBet-button': -> @model.addBet()
     'click .removeBet-button': -> @model.removeBet()
     'click .play-button': -> @model.play()
+    'click .double-button': -> @model.doubleDown()
 
 
   initialize: ->
@@ -29,7 +30,12 @@ class window.AppView extends Backbone.View
     @model.on('change:currentBet', @render, this)
     @model.on('change:playStateOn', @render, this)
     @model.on('change', @render, this)
-    # @model.on('add', -> alert ('called'), this)
+    @model.on('sendHit', @hideDouble, this)
+    # @model.get('playerHand').on('hit', @hideDouble, this)
+
+  addEvent: ->
+    console.log('resetting')
+    @model.get('playerHand').on('hit', @hideDouble, this)
 
   render: ->
     @$el.children().detach()
@@ -46,9 +52,10 @@ class window.AppView extends Backbone.View
       @$('.play-button').hide()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
-    if @model.get('playerHand').length > 2
-      console.log('hideme')
-      @$('.double-button').hide()
+
+  hideDouble: ->
+    console.log('first')
+    @$('.double-button').hide()
 
   # addChips: ->
   #   chips = @model.get('playerChips')

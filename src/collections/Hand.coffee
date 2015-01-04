@@ -5,6 +5,7 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     if !@isDealer
+      @trigger('hit')
       newCard = @deck.pop()
       @add(newCard)
       if @isBust()

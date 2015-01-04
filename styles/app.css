@@ -23,16 +23,13 @@ h1 {
   overflow: auto;
 }
 
-.hit-button, .stand-button {
+.hit-button, .stand-button, .double-button {
   background-color: #A4D8A5;
 }
 
 .gameContainer {
   margin: 0 520;
   width: 50%;
-}
-
-.player-hand-container, .dealer-hand-container {
 }
 
 .button-container {

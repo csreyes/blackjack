@@ -39,6 +39,7 @@ class window.App extends Backbone.Model
     @set 'dealerHand', @get('deck').dealDealer()
     @get('playerHand').on('playerBust', @playerBust, this)
     @get('playerHand').on('stand', @playerStand, this)
+    @get('playerHand').on('hit', @sendHit, this)
     @get('dealerHand').on('dealerBust', @dealerBust, this )
     @get('dealerHand').on('dealerStand', @dealerStand, this)
     @trigger('newHand')
@@ -92,3 +93,11 @@ class window.App extends Backbone.Model
     @set 'currentBet', 10
     @newHand()
 
+  doubleDown: ->
+    @set 'currentBet', @get('currentBet') * 2
+    @get('playerHand').hit()
+    if @get('playerHand').scores()[0] <= 21
+      @get('playerHand').stand()
+
+  sendHit: ->
+    @trigger('sendHit')
