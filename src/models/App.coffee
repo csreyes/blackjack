@@ -7,13 +7,14 @@ class window.App extends Backbone.Model
     @set 'currentBet', 10
     @set 'playStateOn', false
     @newHand()
+    @set 'delay', 100
 
   playerBust: ->
     callback = =>
       alert('Player Busted !')
       @payOut(false)
       @set 'playStateOn', false
-    setTimeout callback, 100
+    setTimeout callback, @get('delay')
 
   playerStand: ->
     @get('dealerHand').at(0).flip()
@@ -24,13 +25,13 @@ class window.App extends Backbone.Model
       alert('Dealer Busted!')
       @payOut(true)
       @set 'playStateOn', false
-    setTimeout callback, 100
+    setTimeout callback, @get('delay')
 
   dealerStand: ->
     callback = =>
       @compareHands()
       @set 'playStateOn', false
-    setTimeout callback, 100
+    setTimeout callback, @get('delay')
 
   newHand: ->
     if @get('deck').length <= 10
@@ -72,15 +73,15 @@ class window.App extends Backbone.Model
         alert('blackjack')
         @payOut(true)
         @set 'playStateOn', false
-      setTimeout(callback.bind(@), 100)
+      setTimeout(callback.bind(@), @get('delay'))
 
-  addBet: ->
-    if @get('currentBet') < @get('playerChips') && !@get('playState')
-      @set 'currentBet', @get('currentBet')+10
+  addBet: (amount) ->
+    if @get('currentBet') + amount <= @get('playerChips') && !@get('playState')
+      @set 'currentBet', @get('currentBet')+amount
 
-  removeBet: ->
-    if @get('currentBet') > 10 && !@get('playState')
-      @set 'currentBet', @get('currentBet')-10
+  removeBet: (amount) ->
+    if @get('currentBet') - amount >= 10  && !@get('playState')
+      @set 'currentBet', @get('currentBet')-amount
 
   payOut: (win)->
     if win
@@ -94,10 +95,11 @@ class window.App extends Backbone.Model
     @newHand()
 
   doubleDown: ->
-    @set 'currentBet', @get('currentBet') * 2
-    @get('playerHand').hit()
-    if @get('playerHand').scores()[0] <= 21
-      @get('playerHand').stand()
+    if @get('currentBet') * 2 <= @get('playerChips')
+      @set 'currentBet', @get('currentBet') * 2
+      @get('playerHand').hit()
+      if @get('playerHand').scores()[0] <= 21
+        @get('playerHand').stand()
 
   sendHit: ->
     @trigger('sendHit')

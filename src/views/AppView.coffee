@@ -7,8 +7,30 @@ class window.AppView extends Backbone.View
         <br>
       <button class="hit-button btn btn-default btn-lg">Hit</button> <button class="stand-button btn btn-default btn-lg">Stand</button>
       <button class="double-button btn btn-default btn-lg">DoubleDown</button>
-      <button class="addBet-button btn btn-default btn-lg">Increase Bet</button>
-      <button class="removeBet-button btn btn-default btn-lg">Decrease Bet</button>
+      <span class="dropdown">
+        <button class="btn btn-default dropdown-toggle btn-lg" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+          Increase Bet
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li class="addTen"role="presentation"><a role="menuitem" tabindex="-1" href="#">10</a></li>
+          <li class="addTwenty"role="presentation"><a role="menuitem" tabindex="-1" href="#">20</a></li>
+          <li class="addFifty"role="presentation"><a role="menuitem" tabindex="-1" href="#">50</a></li>
+          <li class="addHundred"role="presentation"><a role="menuitem" tabindex="-1" href="#">100</a></li>
+        </ul>
+      </span>
+      <span class="dropdown">
+        <button class="btn btn-default dropdown-toggle btn-lg" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+          Decrease Bet
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li class="removeTen"role="presentation"><a role="menuitem" tabindex="-1" href="#">10</a></li>
+          <li class="removeTwenty"role="presentation"><a role="menuitem" tabindex="-1" href="#">20</a></li>
+          <li class="removeFifty"role="presentation"><a role="menuitem" tabindex="-1" href="#">50</a></li>
+          <li class="removeHundred"role="presentation"><a role="menuitem" tabindex="-1" href="#">100</a></li>
+        </ul>
+      </span>
       <button class="playerChips btn btn-default btn-lg" disabled="disabled">Current Bet: <%= currentBet %></button>
       <button class="playerChips btn btn-default btn-lg" disabled="disabled">Total Chips: <%= playerChips %></button>
     </div>
@@ -17,10 +39,18 @@ class window.AppView extends Backbone.View
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.get('playerHand').stand()
-    'click .addBet-button': -> @model.addBet()
+    # 'click .addBet-button': -> @model.addBet()
     'click .removeBet-button': -> @model.removeBet()
     'click .play-button': -> @model.play()
     'click .double-button': -> @model.doubleDown()
+    'click .addTen': -> @model.addBet(10)
+    'click .addTwenty': -> @model.addBet(20)
+    'click .addFifty': -> @model.addBet(50)
+    'click .addHundred': -> @model.addBet(100)
+    'click .removeTen': -> @model.removeBet(10)
+    'click .removeTwenty': -> @model.removeBet(20)
+    'click .removeFifty': -> @model.removeBet(50)
+    'click .removeHundred': -> @model.removeBet(100)
 
 
   initialize: ->
@@ -47,8 +77,7 @@ class window.AppView extends Backbone.View
       @$('.dealer-hand-container').hide()
       @$('.double-button').hide()
     else
-      @$('.addBet-button').hide()
-      @$('.removeBet-button').hide()
+      @$('.dropdown').hide()
       @$('.play-button').hide()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
     @$('.dealer-hand-container').html new HandView(collection: @model.get 'dealerHand').el
